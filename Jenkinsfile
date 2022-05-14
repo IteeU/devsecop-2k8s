@@ -1,14 +1,16 @@
 pipeline {
   agent any
 
-  stages {
-      stage('Build Artifact') {
-            steps {
-              sh "mvn clean package -DskipTests=true"
-              archive 'target/*.jar' //so that they can be downloaded later
-            }
-        } 
-         stage('Unit Tests - JUnit and Jacoco') {
+   stages {
+
+    stage('Build Artifact - Maven') {
+      steps {
+        sh "mvn clean package -DskipTests=true"
+        archive 'target/*.jar'
+      }
+    }
+
+    stage('Unit Tests - JUnit and Jacoco') {
       steps {
         sh "mvn test"
       }
@@ -16,6 +18,16 @@ pipeline {
         always {
           junit 'target/surefire-reports/*.xml'
           jacoco execPattern: 'target/jacoco.exec'
+        }
+      }
+    }
+
+    stage('Docker Build and Push') {
+      steps {
+        withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
+          sh 'printenv'
+          sh 'docker build -t itoroukpe/numeric-app:""$GIT_COMMIT"" .'
+          sh 'docker push itoroukpe/numeric-app:""$GIT_COMMIT""'
         }
       }
     }
