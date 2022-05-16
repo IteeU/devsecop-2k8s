@@ -65,7 +65,6 @@
       </execution>
    </executions>
 </plugin>
-		</plugins>
 		
 		<!--                   PITest Mutation Plugin                   -->
 <plugin>
@@ -87,6 +86,8 @@
       </outputFormats>
    </configuration>
 </plugin>
+		</plugins>
+
 	</build>
 
 </project>
