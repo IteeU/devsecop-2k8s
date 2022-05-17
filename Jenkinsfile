@@ -33,7 +33,7 @@ pipeline {
       }
     }
     
-    stage('SonarQube - SAST') {
+    /*stage('SonarQube - SAST') {
       steps {
         withSonarQubeEnv('SonarQube') {
           sh "mvn sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.host.url=http://devsecops-itee.westeurope.cloudapp.azure.com:9000"
@@ -45,7 +45,8 @@ pipeline {
         }
       }
     }
-    
+    */
+
     stage('Vulnerability Scan - Docker ') {
       steps {
         sh "mvn dependency-check:check"
