@@ -93,8 +93,8 @@ pipeline {
           "Kubesec Scan": {
             sh "bash kubesec-scan.sh"
           },
-          "OPA Conftest": {
-            sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-docker-security.rego Dockerfile'
+          "Trivy Scan": {
+            sh "bash trivy-k8s-scan.sh"
           }
         )
       }
